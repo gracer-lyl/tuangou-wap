@@ -10,27 +10,24 @@
 <body>
 <!--顶部-->
 <header>
-	<a href="#" title="美食" class="return"><span class="return-txt">团购详情</span></a>选择套餐
+	<div class="header-box">
+		<div class="search-mode">
+			<div class="search">
+			<form autocomplete="off" action="/shoplist/1/search" method="post" id="searchForm">
+				 <input type="text" autocomplete="off" autocapitalize="off" autocorrect="off" class="default" placeholder="输入商户名搜索" name="keyword" id="J_search_input">
+				 <button type="submit" class="search-icon" title="搜索" id="J_search_btn"></button>
+			</form>
+			</div>
+			<a href="/" title="返回" class="search-cancel">返回</a>
+		</div>
+	</div>
 </header>
 <!--顶部 end-->
 
 <!--内容-->
-<section>
-	<div class="err-box">请选择您要购买的套餐</div>
-		<div class="package-list">
-			<ul>
-			<li>
-				<a href="#">常德路店抵用券<span class="price">¥101</span><i class="arrow-ent"></i></a>
-			</li>
-			<li class="sold-out">
-				<a href="#"><span class="tip">[卖光了]</span>常德路店抵用券<span class="price">¥101</span></a>
-			</li>
-            <li>
-				<a href="#">常德路店抵用券<span class="price">¥101</span><i class="arrow-ent"></i></a>
-			</li>
-			</ul>
-		</div>
+<section class="main">
 </section>
+
 <!--内容 end-->
 <!--footer-->
 <footer class="footer">
@@ -40,8 +37,5 @@
 </footer>
 <!--footer end-->
 
-<div class="warning" style="z-index: 2300; height: auto; top: 164.5px; left: 520px; position: fixed;">
-请选择您要购买的套餐
-</div>
 </body>
 </html>
