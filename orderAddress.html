@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>无标题文档</title>
+<link href="css/t.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<!--顶部-->
+<header>
+	<a href="#" title="美食" class="return"><span class="return-txt">地址列表</span></a>新地址
+</header>
+<!--顶部 end-->
+
+<!--内容-->
+<section>
+    <form action="/wap/saveAddress" id="dealform" method="post">
+	<div class="Box">
+		<h5>请认真填写配送信息，以保住货品送达</h5>
+		<table width="100%" class="list-tab" cellpadding="0" cellspacing="0">
+        	<tr><td class="t">省份：</td><td>
+            <select name="province" id="J_province">
+                <option value="0">--请选择--</option>
+                <option value="1">北京</option>
+                <option value="2">天津</option>
+                <option value="3">河北</option>
+            </select></td></tr>
+            <tr><td class="t">城市：</td><td>
+                <select name="city" id="J_city">
+                    <option value="0">--请选择--</option>
+                </select>
+            </td></tr>
+            <tr><td class="t">区县：</td><td>
+                <select name="district" id="J_district"><option value="0">--请选择--</option></select>
+            </td></tr>
+            <tr><td class="t">详细地址：</td><td><input id="J_detailAddr" class="f-input" placeholder="无需重复填写省市区" type="text" name=""></td></tr>
+            <tr><td class="t">邮编：</td><td><input id="J_postcode" class="f-input" type="text" name=""></td></tr>
+            <tr><td class="t">收货人：</td><td><input id="J_consignee" class="f-input" type="text" name=""></td></tr>
+            <tr><td class="t">电话：</td><td><input id="J_telphone" class="f-input" type="text" name=""></td></tr>
+        </table>
+	</div>
+    <div class="Box"><p class="tip">最多保存5个地址，当前地址可使用但无法保存。</p></div>
+    <div class="Box">
+        <input id="J_submit" type="submit" class="tg-btn" name="" value="保存并使用" style="width:100%" />
+        <!--<a id="" class="tg-btn" title="" href="javascript:void(0)">保存并使用</a>-->
+    </div>
+    </form>
+</section>
+<!--内容 end-->
+<!--footer-->
+<footer class="footer">
+	<div class="login"><strong>点小平</strong>，<a href="#">退出</a><span class="city"><strong>上海</strong>  <a href="#">切换城市</a></span></div>
+	<div><a href="#" title="">首页</a><em>|</em><a href="#" title="">我的点评团</a><em>|</em><a href="#" title="">客户端</a><em>|</em><a href="#" title="">标准版</a><em>|</em><a href="#" title="">电脑版</a></div>
+   	<p>©t.dianping.com   大众点评网</p>
+</footer>
+<!--footer end-->
+<script type="text/javascript" src="script/zepto.min.js"></script>
+<script type="text/javascript" src="script/base.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    DP.order.addressSelector();
+    DP.order.validateAddr();
+});
+</script>
+</body>
+</html>
