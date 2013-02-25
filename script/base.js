@@ -765,6 +765,9 @@ DP.namespace('order');
         if((maxAmount && amount < maxAmount) || !maxAmount) {
           amountEle.val(amount + 1);
           totalPriceEle.text((priceVal * (amount + 1)).toFixed(2));
+        } else {
+          DP.Notification.flashBox('本单每人限购' + maxAmount + '份', 1000);
+          return;
         }
       });
     },
@@ -781,6 +784,8 @@ DP.namespace('order');
           filledVal = amount - 1;
         } else {
           filledVal = 1;
+          DP.Notification.flashBox('本单至少购买1份', 1000);
+          return;
         }
         amountEle.val(filledVal);
         totalPriceEle.text((priceVal * filledVal).toFixed(2));
@@ -1033,9 +1038,29 @@ DP.order.validateAddr = function () {
 /* 提交订单 */
 DP.order.submitOrder = function () {
   var submitBtn = $('#J_submit'),
+      amount = $('#J_amount'),
+      minCount = amount.prev().attr('data-min'),
+      maxCount = amount.next().attr('data-max'),
       form = $('#checkOurForm');
   submitBtn.on('click', function(e) {
     e.preventDefault();
+    var amountVal = amount.val().trim();
+    if (amountVal == '') {
+      DP.Notification.flashBox('购买数量不能为空', 1000);
+      return;
+    }
+    if (!/^[0-9]{1,}$/.test(amountVal)) {
+      DP.Notification.flashBox('购买数量必须为数字', 1000);
+      return;
+    }
+    if (amountVal < minCount) {
+      DP.Notification.flashBox('本单至少购买' + minCount  + '份', 1000);
+      return;
+    }
+    if (amountVal > maxCount) {
+      DP.Notification.flashBox('本单每人限购' + maxCount  + '份', 1000);
+      return;
+    }
     $.ajax({
         type: 'GET',
         url: '/tuangou-wap/json/submitorder.json',
@@ -1044,7 +1069,8 @@ DP.order.submitOrder = function () {
           if(rt.code === 200) {
             form.submit();
           } else if (rt.code === 500) {
-            DP.Notification.flashBox(rt.msg, 2000);
+            DP.Notification.flashBox(rt.msg, 1000);
+            return;
           }
         }
     });
@@ -1057,7 +1083,51 @@ DP.user = {
          receiptList = $('#J_recepitList');
     moreBtn.on('click', function (e) {
       e && e.preventDefault();
-      console.log('SO');
+      var self = $(this),
+           currentNum = self.attr('data-current');
+      $.ajax({
+              type: 'POST',
+              url: '/tuangou-wap/json/receipt.json',
+              data: { 'currentPage': currentNum },
+              dataType: 'json',
+              beforeSend: function () { 
+                var loadingHtml = '<li><div id="J_spin" style="width:100%;height:83px;"></div></li>';
+                receiptList.append(loadingHtml);
+                var spin = new DP.Spinner().spin($('#J_spin')[0]);
+              },
+              success: function (rt) {
+                if(rt.code === 200) {
+                  var receiptArr = rt.receiptList;
+                  $('#J_spin').parent().remove();
+                  self.attr('data-current', rt.currentPage);
+                  if (receiptArr.length > 0) {
+                    receiptArr.forEach(function(item) {
+                        var receiptHtml = '<li>'
+                        + '<a class="item" title="" href="/tuan/' + item.receiptId + '">'
+                        + '<table width="100%" cellpadding="0" cellspacing="0">'
+                        + '<tbody><tr>'
+                                + '<td width="60" valign="top"><div class="surplus">剩余<br><strong>' + item.remainDays + '</strong>&nbsp;天</div></td>'
+                                + '<td>'
+                                + '<div class="infor">'
+                                + '<h3 class="title">' + item.dealName + '</h3>'
+                                + '<p class="Fix"><span class="phone">' + item.serialNumber + '</span><span class="time">' + item.endTime + '</span></p>'
+                                + '</div>'
+                                + '</td>'
+                            + '</tr>'
+                            + '</tbody></table>'
+                          + '</a>'
+                        + '</li>';
+                        receiptList.append(receiptHtml);
+                    });
+                  }
+                } else if (rt.code === 500) {
+                  console.log('many type of errors');
+                }
+              },
+              error: function (xhr, type) {
+              }
+          });
+
     });
   }
 };
