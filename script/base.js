@@ -896,7 +896,10 @@ DP.order.addressSelector = function () {
   var provinceEle = $('#J_province'),
       cityEle = $('#J_city'),
       districtEle = $('#J_district'),
-      optionHtml = '<option value="0">--请选择--</option>';
+      optionHtml = '<option value="0">--请选择--</option>',
+      isSpecialCity = function (id) {
+        return (id == 1) || (id == 2) || (id == 9) || (id == 22);
+      };
   provinceEle.on('change', function (e) {
         var _self = $(this),
             val = _self.val();
@@ -909,10 +912,21 @@ DP.order.addressSelector = function () {
                 beforeSend: function () { },
                 success: function (rt) {
                   if(rt.code === 200) {
-                    var cityList = rt.cityList;
+                    var cityList = rt.cityList,
+                         specialCityId;
+                    cityEle.empty().append(optionHtml);
+                    if (isSpecialCity(val)) {
+                      cityEle.empty();
+                    }
                     cityList.forEach(function(item) {
                         cityEle.append('<option value="' + item.id + '">' + item.name + '</option>');
+                        if (isSpecialCity(val)) {
+                          specialCityId = item.id;
+                        }
                     });
+                    if (isSpecialCity(val)) {
+                      getRegions(specialCityId);
+                    }
                   } else if (rt.code === 500) {
                     console.log('many type of errors');
                   }
@@ -925,21 +939,18 @@ DP.order.addressSelector = function () {
             districtEle.empty().append(optionHtml);
         }
     });
-
-    // city select
-    cityEle.on('change', function(e) {
-        var self = $(this),
-            val = self.val();
-        if (val > 0) {
+    var getRegions = function (v) {
+      if (v > 0) {
             $.ajax({
                 type: 'POST',
                 url: '/tuangou-wap/json/distict.json',
-                data: { 'cityId': val },
+                data: { 'cityId': v },
                 dataType: 'json',
                 beforeSend: function () { },
                 success: function (rt) {
                   if(rt.code === 200) {
                     var districtList = rt.districtList;
+                    districtEle.empty().append(optionHtml);
                     districtList.forEach(function(item) {
                         districtEle.append('<option value="' + item.id + '">' + item.name + '</option>');
                     });
@@ -953,6 +964,12 @@ DP.order.addressSelector = function () {
         } else {
             districtEle.empty().append(optionHtml);
         }
+    };
+    // city select
+    cityEle.on('change', function(e) {
+        var self = $(this),
+            val = self.val();
+        getRegions(val);
     });
 }
 
@@ -1033,6 +1050,17 @@ DP.order.submitOrder = function () {
     });
   });
 }
+
+DP.user = {
+  getMoreReceipt: function () {
+    var moreBtn = $('#J_moreBtn'),
+         receiptList = $('#J_recepitList');
+    moreBtn.on('click', function (e) {
+      e && e.preventDefault();
+      console.log('SO');
+    });
+  }
+};
 
 DP.app = {
   hidePhoneAddrBar: function () {
