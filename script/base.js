@@ -1103,7 +1103,7 @@ DP.user = {
                   if (receiptArr.length > 0) {
                     receiptArr.forEach(function(item) {
                         var receiptHtml = '<li>'
-                        + '<a class="item" title="" href="/tuan/' + item.receiptId + '">'
+                        + '<a class="item" title="" href="/tuan/receiptdetail/' + item.receiptId + '">'
                         + '<table width="100%" cellpadding="0" cellspacing="0">'
                         + '<tbody><tr>'
                                 + '<td width="60" valign="top"><div class="surplus">剩余<br><strong>' + item.remainDays + '</strong>&nbsp;天</div></td>'
