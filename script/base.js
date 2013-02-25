@@ -835,7 +835,7 @@ DP.namespace('order');
         phoneNum = self.phone.text();
       $.ajax({
         type: 'POST',
-        url: '/wap/json/bindmobile.json',
+        url: '/tuangou-wap/json/bindmobile.json',
         data: { "phone":　phoneNum },
         dataType: 'json',
         beforeSend: function () { },
@@ -872,7 +872,7 @@ DP.namespace('order');
     _bindAction: function (mobi, code) {
       $.ajax({
         type: 'POST',
-        url: '/wap/json/bindaction.json',
+        url: '/tuangou-wap/json/bindaction.json',
         data: { "capcha": code, "mobile": mobi },
         dataType: 'json',
         beforeSend: function () { },
@@ -903,7 +903,7 @@ DP.order.addressSelector = function () {
         if (val > 0) {
             $.ajax({
                 type: 'POST',
-                url: '/wap/json/province.json',
+                url: '/tuangou-wap/json/province.json',
                 data: { 'provinceId': val },
                 dataType: 'json',
                 beforeSend: function () { },
@@ -933,7 +933,7 @@ DP.order.addressSelector = function () {
         if (val > 0) {
             $.ajax({
                 type: 'POST',
-                url: '/wap/json/distict.json',
+                url: '/tuangou-wap/json/distict.json',
                 data: { 'cityId': val },
                 dataType: 'json',
                 beforeSend: function () { },
@@ -1021,7 +1021,7 @@ DP.order.submitOrder = function () {
     e.preventDefault();
     $.ajax({
         type: 'GET',
-        url: '/wap/json/submitorder.json',
+        url: '/tuangou-wap/json/submitorder.json',
         dataType: 'json',
         success: function (rt) {
           if(rt.code === 200) {
