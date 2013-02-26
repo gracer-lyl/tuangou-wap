@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>无标题文档</title>
+<link href="css/t.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<!--顶部-->
+<header>
+	<a href="#" title="美食" class="return"><span class="return-txt">确认订单</span></a>选择优惠类型
+</header>
+<!--顶部 end-->
+
+<!--内容-->
+<section>
+	<div class="Box">
+		<h5>选择您要使用的优惠，无效抵用券将不会显示</h5>
+		<div class="package-list">
+			<ul id="J_couponList">
+            <li>
+            <a class="dz" href="javascript:;">
+            	<table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                	<td>不使用优惠</td>
+                    <td width="30" align="right" valign="middle"><input type="radio" name="couponBtn"></td>
+                </tr>
+                </table>
+            </a>
+            </li>
+            <li>
+            <a class="dz" href="javascript:;">
+            	<table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                	<td>抵用券1：￥10  2011-04-30过期</td>
+                    <td width="30" align="right" valign="middle"><input type="radio"  name="couponBtn"></td>
+                </tr>
+                </table>
+            </a>
+            </li>
+            <li>
+            <a class="dz" href="javascript:;">
+            	<table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                	<td>抵用券2：￥10  2011-04-30过期</td>
+                    <td width="30" align="right" valign="middle"><input type="radio"  name="couponBtn"></td>
+                </tr>
+                </table>
+            </a>
+            </li>
+            <li>
+            <a class="dz" href="#">
+            	<table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                	<td><input type="text" placeholder="填写优惠代码" class="test-input"></td>
+                    <td width="30" align="right" valign="middle"><input type="radio" name="couponBtn"></td>
+                </tr>
+                </table>
+            </a>
+            </li>
+        </div>
+	</div>
+    
+    <div class="Box"><a class="tg-btn" title="" href="#">确定</a></div>
+</section>
+<!--内容 end-->
+<!--footer-->
+<footer class="footer">
+	<div class="login"><strong>点小平</strong>，<a href="#">退出</a><span class="city"><strong>上海</strong>  <a href="#">切换城市</a></span></div>
+	<div><a href="#" title="">首页</a><em>|</em><a href="#" title="">我的点评团</a><em>|</em><a href="#" title="">客户端</a><em>|</em><a href="#" title="">标准版</a><em>|</em><a href="#" title="">电脑版</a></div>
+   	<p>©t.dianping.com   大众点评网</p>
+</footer>
+<!--footer end-->
+<script type="text/javascript" src="script/zepto.min.js"></script>
+<script type="text/javascript" src="script/base.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    DP.order.selectCoupon();
+});
+</script>
+</body>
+</html>
