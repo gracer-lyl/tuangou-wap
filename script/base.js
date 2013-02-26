@@ -1035,6 +1035,14 @@ DP.order.validateAddr = function () {
   });
 }
 
+DP.order.selectCoupon = function () {
+  var couponList = $('#J_couponList li');
+  couponList.click(function(e) {
+    var self = $(this);
+    self.find('input[type=radio]')[0].checked = true;
+  });
+}
+
 /* 提交订单 */
 DP.order.submitOrder = function () {
   var submitBtn = $('#J_submit'),
