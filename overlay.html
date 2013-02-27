@@ -5,10 +5,9 @@
 		
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	
-		<link  href="/t/css/t.css" rel="stylesheet" type="text/css">
-
+		<link href="css/t.css" rel="stylesheet" type="text/css">
 	</head>
+
 	<body id="top">
 		
 		
@@ -714,17 +713,13 @@
 	</div>
 
 
-<div style="visibility: visible; top: 0px; left: 0px; width: 100%; background-color: rgb(0, 0, 0); z-index:999;  opacity:.5; filter:alpha(opacity=50); position: fixed; height: 294px;" class="mbox_overlay"></div>
+<!--<div style="visibility: visible; top: 0px; left: 0px; width: 100%; background-color: rgb(0, 0, 0); z-index:999;  opacity:.5; filter:alpha(opacity=50); position: fixed; height: 294px;" class="mbox_overlay"></div>-->
 
-<div style="display: block; height: 1078px;" class="shop-lay hide" id="">
-	<div class="shop-nearby" id="">
-		<div>
-			<div class="type-search">
-				<div class="tit">全部类别</div>
-			</div>
-		</div>
+<div id="rightCate" class="shop-lay hide">
+	<div class="shop-nearby" id="swipeTop">
+		
 		<div id="swipeTopCont" class="distance-list">
-			<ul id="swipeCont-2">
+			<ul id="swipeCont-1">
 				<li>
 					<a href="javascript:void(0);" title="" class="toggler-bar">美食<span class="num">(29)</span></a>
 					<i class="nearby-down"></i>
@@ -867,13 +862,8 @@
 					<i class="nearby-down"></i>
 				</li>
 			</ul>
-		</div>
-	</div>
-</div>
 
-<div style="display: block; height: 1078px;" class="shop-lay hide" id="">
-	<div class="shop-nearby" id="">
-		<div id="swipeTopCont" class="distance-list">
+
 			<ul id="swipeCont-2">
 				<li>
 					<a href="javascript:void(0);" title="" class="toggler-bar">卢湾区<span class="num">(2)</span></a>
@@ -1060,18 +1050,7 @@
 					</div>
 				</li>
 			</ul>
-		</div>
-	</div>
-</div>
 
-<div style="display: block; height: 1078px;" class="shop-lay hide" id="rightCate">
-	<div style="" class="shop-nearby" id="swipeTop">
-		<div>
-			<div id="type-search-3" class="type-search">
-				<div class="tit">排序</div>
-			</div>
-		</div>
-		<div id="swipeTopCont" class="distance-list">
 			<ul id="swipeCont-3">
 				<li>
 					<a href="javascript:void(0);" title="">默认排序</a>
@@ -1095,14 +1074,36 @@
 					<a href="javascript:void(0);" title="">即将结束</a>
 				</li>
 			</ul>
+
 		</div>
 	</div>
 </div>
-
-<div style="right:300px; top:20px" id="leftmask" class="right-mask">
-	<div class="infor"><span class="l"></span><span class="r"></span></div>
-</div>
-
-
+<!--<div class="infor"><span class="l"></span><span class="r"></span></div>-->
+<!--footer end-->
+<script type="text/javascript" src="script/zepto.min.js"></script>
+<script type="text/javascript" src="script/base.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.shop-search li').each(function (index, item) {
+        var self = $(item);
+        self.on('click', function () {
+            DP.overlay.start(index + 1);
+            DP.overlay.showLeft();
+            $('body > div').click(function(event) {
+              var t = event.target || event.srcElement;
+              if(t.nodeName.toUpperCase() === "DIV" && $(t).attr('id') == 'leftmask') {
+                  // $(t).remove();
+                  DP.overlay.hideLeft();
+                  window.scroll(0, 0);
+              }
+          });
+          $('#leftmask .infor').click(function() {
+          	   DP.overlay.hideLeft();
+              window.scroll(0, 0);
+          });
+        });
+      });
+});
+</script>
 	</body>
 </html>

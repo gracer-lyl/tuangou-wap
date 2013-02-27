@@ -209,6 +209,7 @@ footer em{ color:#ccc; padding:0 8px; font-weight:normal;}
 
 	
 /* 弹出层 */
+/*
 .shop-lay{ position: absolute; overflow:hidden; zoom:1; top:0;right:0;height:100%; width:275px;z-index:1000;}
 .shop-lay .shop-nearby{ -webkit-transform:translate(275px,0px); position: relative; border-left:1px solid #a6a6a6; background-color:#323232;height: 100%;}
 .shop-lay .shop-nearby .nearby-mask {position: absolute;width: 100%;height: 100%;background:rgba(51, 51, 51, 0.3);z-index: 199;top:0;right: 0; cursor:pointer;}
@@ -228,18 +229,47 @@ footer em{ color:#ccc; padding:0 8px; font-weight:normal;}
 .distance-list li a:visited{ color:#fff}
 .distance-list li .distan-news{ overflow:hidden; zoom:1;border-top:1px solid #646464;border-left:1px solid #646464;}
 .distance-list li .distan-news a{ float:left; width:70px; border:1px solid #646464; margin:-1px 0 0 -1px;padding:14px 10px 15px;background-color: #141414;font-size:14px;}
+*/
 /*.right-mask {position: absolute;width: 100%;height: 100%;background:rgba(51, 51, 51, 0.3);z-index: 199;top:0;right: 0;}
 .right-mask::before, .right-mask::after {content: '';position:absolute;width: 8px;height: 8px;top: 200px;border-right: 4px solid #FFF;border-bottom: 4px solid #FFF;-webkit-transform:rotate(-45deg);}
 .right-mask::before {right: 290px;}
 .right-mask::after {right: 300px;}*/
+
+
+.shop-lay{ position: absolute; overflow:hidden; zoom:1; top:0;right:0;height:100%; width:275px;z-index: 999;}
+.shop-lay .shop-nearby{ -webkit-transform:translate(275px,0px); position: relative; border-left:1px solid #a6a6a6; background-color:#323232;height: 100%;}
+.shop-lay .shop-nearby .nearby-mask {position: absolute;width: 100%;height: 100%;background:rgba(51, 51, 51, 0.3);z-index: 199;top:0;right: 0; cursor:pointer;}
+.shop-lay .shop-nearby .nearby-mask::before, .nearby-mask:after {content: '';position:absolute;width: 8px;height: 8px;top: 200px;border-right: 4px solid #FFF;border-bottom: 4px solid #FFF;-webkit-transform:rotate(-45deg);-moz-transform: rotate(-45deg);}
+.shop-lay .shop-nearby .nearby-mask::before {left:-20px;}
+.shop-lay .shop-nearby .nearby-mask::after {left: -30px;}
+.shop-lay .shop-nearby .tit{ padding:10px; color:#fff; position:relative; cursor:pointer;background-color: #323232;}
+.shop-lay .shop-nearby .nearby-up,.shop-lay .shop-nearby .nearby-down,.arrow-ent{ width:8px; height:8px; position:absolute; top:22px;border-right: 2px solid #88837d;border-bottom:2px solid #88837d;right:10px; cursor:pointer;-webkit-transform:rotate(-135deg); -moz-transform: rotate(-135deg);}
+.shop-lay .shop-nearby .nearby-down{-webkit-transform:rotate(45deg);-moz-transform: rotate(45deg); top:16px}
+.nearby-distance{ background-color:#656565; padding:5px 10px; overflow:hidden; zoom:1;}
+.nearby-distance .distance-t{ color:#fff; padding:5px 10px; float:left; margin-right:5px;}
+.nearby-distance .distance-cur{ background-color:#ff9c00;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+.distance-list{ overflow:hidden; zoom:1;}
+.distance-list li{ border-top:1px solid #646464; position:relative; margin-top:-1px;background-color: #141414;}
+.distance-list li a{ display:block; padding:14px 10px 15px; color:#fff; font-size:16px;background-color: #323232;}
+.distance-list li a:visited{ color:#fff}
+.distance-list li .distan-news{ overflow:hidden; zoom:1;border-top:1px solid #646464;border-left:1px solid #646464;display:none;-webkit-backface-visibility: hidden;-webkit-transform: translate3d(0,0,0);}
+.distance-list li .distan-news a{ float:left; width:86px; border:1px solid #646464; margin:-1px 0 0 -1px; text-align:center;padding:14px 2px 15px;background-color: #141414;}
+/*
+.right-mask {position: absolute;width: 100%;height: 100%;background:rgba(51, 51, 51, 0.3);z-index: 199;top:0;right: 0;}
+.right-mask::before, .right-mask::after {content: '';position:absolute;width: 8px;height: 8px;top: 200px;border-right: 4px solid #FFF;border-bottom: 4px solid #FFF;-webkit-transform:rotate(-45deg);}
+.right-mask::before {right: 290px;}
+.right-mask::after {right: 300px;}
+*/
 
 .distan-tab table{border-collapse:collapse; border-spacing: 0;border:1px solid #646464;}
 .distan-tab td{width:70px;border-collapse:collapse; border-spacing: 0;border:1px solid #646464;padding:14px 10px 15px;background-color: #141414;}
 .distan-tab .num{ color:#666;}
 .distance-list .distan-tab a{ display:block; padding:0; color:#fff; font-size:14px;background-color: #141414;}
 .mask{width: 100%;height: 100%;background:rgba(51, 51, 51, 0.3);}
-.right-mask {position: absolute;width:38px;height: 38px; padding:;background:#323232;z-index: 199;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px; overflow:hidden;z-index:1001;}
-.right-mask .infor{ width:50px; padding:6px 0 0 8px}
+/*.right-mask {position: absolute;width:38px;height: 38px; padding:;z-index: 199;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px; overflow:hidden;z-index:1001;}*/
+.right-mask {position: absolute;width: 100%;height: 100%;background:rgba(51, 51, 51, 0.3);z-index: 199;top:0;right: 0;}
+.right-mask .infor{ position:absolute; top:200px; right:300px;width:38px; background:#323232;height: 38px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px; overflow:hidden;z-index:100; }
+.right-mask .infor .cont {width:50px; padding:6px 0 0 8px;}
 .right-mask .l{ background-color:#fff; width:10px; height:8px; margin-top:2px;}
 .right-mask .r{border-color:#323232 #323232 #323232 #fff;border-style: solid;border-width:12px 13px;font-size: 0;height: 0;line-height: 0;width: 0; }
 

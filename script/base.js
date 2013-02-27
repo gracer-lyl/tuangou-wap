@@ -654,7 +654,7 @@ Zepto(function($){
                 'height':that.bodyCont.height()
             })
             
-            that.bodyCont.append('<div id="leftmask" class="right-mask"></div>');
+            that.bodyCont.append('<div id="leftmask" class="right-mask"><div class="infor"><div class="cont"><span class="l"></span><span class="r"></span></div></div></div>');
             that.translation(that.contShow[0],{x:0, duration:'0.4s'},function(){
                 $('#leftmask').css('height',that.bodyCont.height());
             })
