@@ -1084,6 +1084,24 @@
 <script type="text/javascript" src="script/base.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	var togglerEles = $('.toggler-bar');
+	togglerEles.each(function (i, t) {
+		var self = $(t),
+		  nextEle = self.next(),
+		  hiddenCont = nextEle.next();
+		self.click(function () {
+		  self.parent().siblings().find('i').removeClass('nearby-up').addClass('nearby-down');
+		  self.parent().siblings().find('.distan-tab').addClass('hide');
+		  if (nextEle.attr('class') === 'nearby-down') {
+			nextEle.removeClass('nearby-down').addClass('nearby-up');
+		  } else {
+			nextEle.removeClass('nearby-up').addClass('nearby-down');
+		  }
+		  hiddenCont.hasClass('hide') ? hiddenCont.removeClass('hide') : hiddenCont.addClass('hide');
+		  
+		});
+	  });
+
     $('.shop-search li').each(function (index, item) {
         var self = $(item);
         self.on('click', function () {
@@ -1092,7 +1110,6 @@ $(document).ready(function() {
             $('body > div').click(function(event) {
               var t = event.target || event.srcElement;
               if(t.nodeName.toUpperCase() === "DIV" && $(t).attr('id') == 'leftmask') {
-                  // $(t).remove();
                   DP.overlay.hideLeft();
                   window.scroll(0, 0);
               }
