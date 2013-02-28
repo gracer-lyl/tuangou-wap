@@ -1151,11 +1151,13 @@ DP.app = {
       dealList = $('#J_dealList'),
       getStatus = function (status) {
         if(status == 0) {
-          return 'soon';
+          return '';
         } else  if(status == 1) {
-          return 'new';
-        } else {
-          return 'sold';
+          return '<div class="sub-icon soon"></div>';
+        } else if (status == 2){
+          return '<div class="sub-icon sold"></div>';
+        } else if (status == 3) {
+          return '<div class="sub-icon new"></div>';
         }
       };
     getDealBtn.on('click', function(e) {
@@ -1164,8 +1166,8 @@ DP.app = {
         curPage = self.attr('data-cur');
         $.ajax({
             type: 'POST',
-            url: '/tuangou-wap/json/moredeal.json',
-            data: { 'currentPage': curPage },
+            url: '/tuan/ajax/moreDealGroupList',
+            data: { 'currentPage': curPage, 'rootCategory': 0, 'subCategory': 0, 'rootRegion': 0, 'subRegion':0, 'sort': 0 },
             dataType: 'json',
             beforeSend: function () {
               var loadingHtml = '<li><div id="J_spin" style="width:100%;height:95px;"></div></li>';
@@ -1178,7 +1180,11 @@ DP.app = {
                 var list = rt.dealGroupList;
                 $('#J_spin').parent().remove();
                 list.forEach(function(item) {
-                  var dealHtml = '<li>'
+                  var distanceHtml = '', dealHtml = '';
+                  if(parseInt(item.distance) > 0) {
+                	  distanceHtml = '<span class="jl">' + item.distance + 'm</span>';
+                  }
+                  dealHtml = '<li>'
                     + '<a href="/tuan/deal/"' + item.id + ' title="" class="item">'
                     +  '<table width="100%" cellspacing="0" cellpadding="0" class="deal-tab">'
                     +  '<tbody><tr>'
@@ -1189,14 +1195,13 @@ DP.app = {
                     +      '<div class="price"><span class="now">¥' + item.price + '</span><span class="old">¥' + item.marketPrice + '</span></div>'
                     +      '<div class="Fix">'
                     +        '<span class="num">' + item.currentJoin + '人</span>'
-                    +        '<span class="jl">' + item.distance + 'm</span>'
+                    +       distanceHtml
                     +      '</div></div>'
                     +    '</td>'
-                    +  '</tr></tbody></table><div class="sub-icon ' + getStatus(item.isToday) + '"></div>'
+                    +  '</tr></tbody></table>' + getStatus(item.status)
                     + '</a></li>';
                   dealList.append(dealHtml);
                 });
-                
                 curPage = parseInt(curPage) + 1;
                 self.attr('data-cur', curPage);
                 if (curPage < rt.pageCount) {
@@ -1209,60 +1214,63 @@ DP.app = {
             error: function (xhr, type) {
             }
         });
-  getMoreMerchant: function () {
-    var shopList = $('#J_shopList'),
-        moreBtn = $('#J_moreBtn');
-    moreBtn.on('click', function(e) {
-      e && e.preventDefault();
-      var self = $(this),
-         curPage = self.attr('data-current');
-      $.ajax({
-              type: 'POST',
-              url: '/tuangou-wap/json/shop.json',
-              data: { 'p': curPage, 'id': '58505', 'lat': 34.123230, 'lng': 120.002312 },
-              dataType: 'json',
-              beforeSend: function () { 
-                var loadingHtml = '<div class="Box nom-box shop-box"><div id="J_spin" style="width:100%;height:83px;"></div></div>';
-                shopList.append(loadingHtml);
-                var spin = new DP.Spinner().spin($('#J_spin')[0]);
-              },
-              success: function (rt) {
-                if(rt.code === 200) {
-                  var shopArr = rt.shopList;
-                  $('#J_spin').parent().remove();
-                  // self.attr('data-current', rt.currentPage);
-                  if (shopArr.length > 0) {
-                    shopArr.forEach(function(item) {
-                        var shopHtml = '<div class="Box nom-box shop-box">'
-                        + '<h3 class="title">' + item.name + '</h3><span class="distance">' + item.distance + '</span>'
-                        + '<table width="100%" cellpadding="0" cellspacing="0">'
-                        + '<tr>'
-                        +      '<td>'
-                        +     '<div class="infor">'
-                        +         '<div class="score Fix"><span class="item-rank-rst irr-star' + item.power + '">评分:五星商户</span></div>'
-                        +         '<p><a href="#">' + item.phone + '</a></p>'
-                        +         '<p>' + item.businessHours + '</p>'
-                        +         '<p>' + item.address + '</p>'
-                        +      '</div>'
-                        +     '</td>'
-                        +      '<td width="55" align="center" valign="middle">'
-                        +     '<a class="go" href="#"><i class="arrow-ent"></i></a>'
-                        +      '</td>'
-                        + '</tr>'
-                        + '</table>'
-                        + '</div>';
-                        shopList.append(shopHtml);
-                    });
-                  }
-                } else if (rt.code === 500) {
-                  console.log('many type of errors');
-                }
-              },
-              error: function (xhr, type) {
-              }
-          });
     });
-  }
+  },
+	getMoreMerchant: function () {
+		var shopList = $('#J_shopList'),
+			moreBtn = $('#J_moreBtn');
+		moreBtn.on('click', function(e) {
+		  e && e.preventDefault();
+		  var self = $(this),
+			 curPage = self.attr('data-current');
+		  $.ajax({
+				  type: 'POST',
+				  url: '/tuangou-wap/json/shop.json',
+				  data: { 'p': curPage, 'id': '58505', 'lat': 34.123230, 'lng': 120.002312 },
+				  dataType: 'json',
+				  beforeSend: function () { 
+					var loadingHtml = '<div class="Box nom-box shop-box"><div id="J_spin" style="width:100%;height:83px;"></div></div>';
+					shopList.append(loadingHtml);
+					var spin = new DP.Spinner().spin($('#J_spin')[0]);
+				  },
+				  success: function (rt) {
+					if(rt.code === 200) {
+					  var shopArr = rt.shopList;
+					  $('#J_spin').parent().remove();
+					  if (shopArr.length > 0) {
+						shopArr.forEach(function(item) {
+							var shopHtml = '<div class="Box nom-box shop-box">'
+							+ '<h3 class="title">' + item.name + '</h3><span class="distance">' + item.distance + '</span>'
+							+ '<table width="100%" cellpadding="0" cellspacing="0">'
+							+ '<tr>'
+							+      '<td>'
+							+     '<div class="infor">'
+							+         '<div class="score Fix"><span class="item-rank-rst irr-star' + item.power + '">评分:五星商户</span></div>'
+							+         '<p><a href="#">' + item.phone + '</a></p>'
+							+         '<p>' + item.businessHours + '</p>'
+							+         '<p>' + item.address + '</p>'
+							+      '</div>'
+							+     '</td>'
+							+      '<td width="55" align="center" valign="middle">'
+							+     '<a class="go" href="#"><i class="arrow-ent"></i></a>'
+							+      '</td>'
+							+ '</tr>'
+							+ '</table>'
+							+ '</div>';
+							shopList.append(shopHtml);
+						});
+					  }
+					  curPage = parseInt(curPage) + 1;
+					  self.attr('data-current', curPage);
+					} else if (rt.code === 500) {
+					  console.log('many type of errors');
+					}
+				  },
+				  error: function (xhr, type) {
+				  }
+			  });
+		});
+	}
 };
 
 
