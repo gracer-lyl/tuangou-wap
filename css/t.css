@@ -555,3 +555,6 @@ footer em{ color:#ccc; padding:0 8px; font-weight:normal;}
 .inp-stor{ border:1px solid #BBBBBB;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px; height:25px; margin-top:10px; padding:0 5px}
 /* 带关闭按钮 */
 .pop-con .location{ padding-right:50px; position:relative;}
+
+
+.photo-deal{ padding:10px;}
