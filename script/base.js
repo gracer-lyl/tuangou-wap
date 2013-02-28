@@ -1145,6 +1145,60 @@ DP.app = {
     setTimeout(function() {
       window.scrollTo(0, 1);
     }, 100);
+  },
+  getMoreMerchant: function () {
+    var shopList = $('#J_shopList'),
+        moreBtn = $('#J_moreBtn');
+    moreBtn.on('click', function(e) {
+      e && e.preventDefault();
+      var self = $(this),
+         curPage = self.attr('data-current');
+      $.ajax({
+              type: 'POST',
+              url: '/tuangou-wap/json/shop.json',
+              data: { 'p': curPage, 'id': '58505', 'lat': 34.123230, 'lng': 120.002312 },
+              dataType: 'json',
+              beforeSend: function () { 
+                var loadingHtml = '<div class="Box nom-box shop-box"><div id="J_spin" style="width:100%;height:83px;"></div></div>';
+                shopList.append(loadingHtml);
+                var spin = new DP.Spinner().spin($('#J_spin')[0]);
+              },
+              success: function (rt) {
+                if(rt.code === 200) {
+                  var shopArr = rt.shopList;
+                  $('#J_spin').parent().remove();
+                  // self.attr('data-current', rt.currentPage);
+                  if (shopArr.length > 0) {
+                    shopArr.forEach(function(item) {
+                        var shopHtml = '<div class="Box nom-box shop-box">'
+                        + '<h3 class="title">' + item.name + '</h3><span class="distance">' + item.distance + '</span>'
+                        + '<table width="100%" cellpadding="0" cellspacing="0">'
+                        + '<tr>'
+                        +      '<td>'
+                        +     '<div class="infor">'
+                        +         '<div class="score Fix"><span class="item-rank-rst irr-star' + item.power + '">评分:五星商户</span></div>'
+                        +         '<p><a href="#">' + item.phone + '</a></p>'
+                        +         '<p>' + item.businessHours + '</p>'
+                        +         '<p>' + item.address + '</p>'
+                        +      '</div>'
+                        +     '</td>'
+                        +      '<td width="55" align="center" valign="middle">'
+                        +     '<a class="go" href="#"><i class="arrow-ent"></i></a>'
+                        +      '</td>'
+                        + '</tr>'
+                        + '</table>'
+                        + '</div>';
+                        shopList.append(shopHtml);
+                    });
+                  }
+                } else if (rt.code === 500) {
+                  console.log('many type of errors');
+                }
+              },
+              error: function (xhr, type) {
+              }
+          });
+    });
   }
 };
 

@@ -15,7 +15,7 @@
 <!--顶部 end-->
 
 <!--内容-->
-<section>
+<section id="J_shopList">
     <div class="Box nom-box shop-box">
     	<h3 class="title">老谭酸菜鱼（中山公园店）</h3><span class="distance">100M</span>
         <table width="100%" cellpadding="0" cellspacing="0">
@@ -75,7 +75,7 @@
     
 </section>
 
-<div class="btn-box Fix"><a class="more-btn Left" title="" href="#"><i class="icon-more"></i>查看更多</a><a class="more-btn Right" title="" href="#"><i class="icon-top"></i>返回顶部</a></div>
+<div class="btn-box Fix"><a id="J_moreBtn" data-current="1" class="more-btn Left" title="" href="javascript:;"><i class="icon-more"></i>查看更多</a><a class="more-btn Right" title="" href="#"><i class="icon-top"></i>返回顶部</a></div>
 <!--内容 end-->
 <!--footer-->
 <footer class="footer">
@@ -84,5 +84,12 @@
    	<p>©t.dianping.com   大众点评网</p>
 </footer>
 <!--footer end-->
+<script type="text/javascript" src="script/zepto.min.js"></script>
+<script type="text/javascript" src="script/base.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    DP.app.getMoreMerchant();
+});
+</script>
 </body>
 </html>
