@@ -1145,6 +1145,71 @@ DP.app = {
     setTimeout(function() {
       window.scrollTo(0, 1);
     }, 100);
+  },
+  moreDeal: function () {
+    var getDealBtn = $('#J_getMoreDeal'),
+      dealList = $('#J_dealList'),
+      getStatus = function (status) {
+        if(status == 0) {
+          return 'soon';
+        } else  if(status == 1) {
+          return 'new';
+        } else {
+          return 'sold';
+        }
+      };
+    getDealBtn.on('click', function(e) {
+      e && e.preventDefault();
+      var self = $(this),
+        curPage = self.attr('data-cur');
+        $.ajax({
+            type: 'POST',
+            url: '/tuangou-wap/json/moredeal.json',
+            data: { 'currentPage': curPage },
+            dataType: 'json',
+            beforeSend: function () {
+              var loadingHtml = '<li><div id="J_spin" style="width:100%;height:95px;"></div></li>';
+              dealList.append(loadingHtml);
+              var spin = new DP.Spinner().spin($('#J_spin')[0]);
+              self.addClass('more-default-btn').html('加载中');
+            },
+            success: function (rt) {
+              if(rt.code === 200) {
+                var list = rt.dealGroupList;
+                $('#J_spin').parent().remove();
+                list.forEach(function(item) {
+                  var dealHtml = '<li>'
+                    + '<a href="/tuan/deal/"' + item.id + ' title="" class="item">'
+                    +  '<table width="100%" cellspacing="0" cellpadding="0" class="deal-tab">'
+                    +  '<tbody><tr>'
+                    +    '<td width="100" valign="top"><img src="' + item.imageUrl + '" class="pic-box"></td>'
+                    +    '<td valign="top">'
+                    +    '<div class="infor">'
+                    +      '<h3 class="title">' + item.titleAbstract + '</h3>'
+                    +      '<div class="price"><span class="now">¥' + item.price + '</span><span class="old">¥' + item.marketPrice + '</span></div>'
+                    +      '<div class="Fix">'
+                    +        '<span class="num">' + item.currentJoin + '人</span>'
+                    +        '<span class="jl">' + item.distance + 'm</span>'
+                    +      '</div></div>'
+                    +    '</td>'
+                    +  '</tr></tbody></table><div class="sub-icon ' + getStatus(item.isToday) + '"></div>'
+                    + '</a></li>';
+                  dealList.append(dealHtml);
+                });
+                
+                curPage = parseInt(curPage) + 1;
+                self.attr('data-cur', curPage);
+                if (curPage < rt.pageCount) {
+                  self.removeClass('more-default-btn').html('<i class="icon-more"></i>查看更多');
+                } else {
+                  self.remove();
+                }
+              }
+            },
+            error: function (xhr, type) {
+            }
+        });
+    });
   }
 };
 
