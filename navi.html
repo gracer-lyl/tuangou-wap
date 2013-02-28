@@ -9,13 +9,13 @@
 
 <body>
 <!--顶部-->
-<header style="position:relative; left:250px;">
-	<a href="#" class="action-bar"></a>点评团 · <a href="#">上海<b class="drop-down"></b></a><a href="/search/p" title="" class="search-icon"></a>
+<header class="slide">
+	<a id="J_togglerBar" data-status="off" href="javascript:;" class="action-bar"></a>点评团 · <a href="#">上海<b class="drop-down"></b></a><a href="/search/p" title="" class="search-icon"></a>
 </header>
 <!--顶部 end-->
 
 <!--内容-->
-<section class="main" style="position:relative; left:250px;">
+<section class="main slide">
 	<div class="shop-search">
 		<ul>
 			<li>500m<i class="sear-arrow"></i></li>
@@ -143,7 +143,7 @@
         </ul>
     </div>
 </section>
-<div class="btn-box Fix" style="position:relative; left:250px;">
+<div class="btn-box Fix slide">
 <div class="page-box Left Fix">
 	<a class="more-btn more-default-btn Left" title="" href="#">上一页</a>
 	<span class="page">1/100</span>
@@ -152,15 +152,18 @@
 <a class="more-btn Right" title="" href="#"><i class="icon-top"></i>返回顶部</a></div>
 <!--内容 end-->
 <!--footer-->
-<footer class="footer" style="position:relative; left:250px;">
+<footer class="footer slide">
 	<div class="login"><strong>点小平</strong>，<a href="#">退出</a><span class="city"><strong>上海</strong>  <a href="#">切换城市</a></span></div>
 	<div><a href="#" title="">首页</a><em>|</em><a href="#" title="">我的点评团</a><em>|</em><a href="#" title="">客户端</a><em>|</em><a href="#" title="">标准版</a><em>|</em><a href="#" title="">电脑版</a></div>
    	<p>©t.dianping.com   大众点评网</p>
 </footer>
 <!--footer end-->
-
-<div class="mbox_overlay" style="visibility: visible; top: 0px; left: 0px; width: 100%; background-color: rgb(0, 0, 0); z-index:999;  opacity:.5; filter:alpha(opacity=50); position: fixed; height: 294px;"></div>
-<div style="display: block; height: 1078px; left:0" class="user-lay" id="">
+<!--
+<div class="mbox_overlay" style="visibility: visible; top: 0px; left: 0px; width: 100%; background-color: rgb(0, 0, 0); z-index:999;  opacity:.5; filter:alpha(opacity=50); position: fixed; height: 294px;"></div> -->
+<style type="text/css">
+.user-lay { -webkit-transform: translate(-250px, 0);  }
+</style>
+<div style="height: 1078px; left:0; " class="user-lay" id="J_navi">
 	<div class="hd">
         <div class="search">
         <form autocomplete="off" action="/shoplist/1/search" method="post" id="searchForm">
@@ -181,9 +184,80 @@
     </div>
 </div>
 
+<!--
 <div class="right-mask" id="leftmask" style="left:300px; top:20px">
 	<div class="infor"><span class="ll"></span><span class="l"></span></div>
 </div>
+-->
+<script type="text/javascript" src="script/zepto.min.js"></script>
+<script type="text/javascript" src="script/base.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    var togglerBar = $('#J_togglerBar');
+    var naviBlock = $('#J_navi');
+    var mainBlock = $('#J_main');
 
+    function translation (el, options, callback) {
+            var opt = $.extend({
+                    duration : '0.4s',
+                    origin : '0 0'
+                }, options || {}),
+                style = el.style;
+            
+            !style['webkitTransitionProperty'] &&
+                (style['webkitTransitionProperty'] = '-webkit-transform');
+                    
+            style['webkitTransitionDuration'] !== opt.duration && 
+                (style['webkitTransitionDuration'] = opt.duration);
+            
+            style['webkitTransformOrigin'] !== opt.origin && 
+                (style['webkitTransformOrigin'] = opt.origin);
+            
+            style['webkitBackfaceVisibility'] !== 'hidden' &&
+                (style['webkitBackfaceVisibility'] = 'hidden');
+            
+            style['webkitTransformStyle'] !== 'preserve-3d' &&
+                (style['webkitTransformStyle'] = 'preserve-3d');
+            
+            if (opt.x != null || opt.y != null) {
+                style['webkitTransform'] = 'translate(' + 
+                        (opt.x ? opt.x + 'px,' : '0,') + 
+                        (opt.y ? opt.y + 'px' : '0') + ')';
+                setTimeout(callback, parseFloat(opt.duration) * 500);
+            }    
+        }
+
+    togglerBar.on('click', function(e) {
+    	e && e.preventDefault();
+    	var self = $(this),
+    	     status = self.attr('data-status');
+
+    	if (status == 'off') {
+     	     self.attr('data-status', 'on');
+    	     translation(naviBlock[0],{x: 0, duration:'0.4s'},function(){
+                // $('#leftmask').css('height',that.bodyCont.height());
+                });
+    	     $('.slide').each(function(index, item) {
+    		translation(item,{x: 250, duration:'0.4s'},function(){
+	                // $('#leftmask').css('height',that.bodyCont.height());
+	           });
+    	      });
+    	} else if (status == 'on') {
+    	    self.attr('data-status', 'off');
+    	    $('.slide').each(function(index, item) {
+    		translation(item,{x: 0, duration:'0.4s'},function(){
+	                // $('#leftmask').css('height',that.bodyCont.height());
+	                naviBlock.attr('style', 'height: 1078px; left:0;');
+	                $(item).attr('style', '');
+	           });
+    	      });
+    	    translation(naviBlock[0],{x: -250, duration:'0.4s'},function(){
+                // $('#leftmask').css('height',that.bodyCont.height());
+               });
+    	}
+
+    });
+});
+</script>
 </body>
 </html>
