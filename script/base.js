@@ -1146,6 +1146,12 @@ DP.app = {
       window.scrollTo(0, 1);
     }, 100);
   },
+  returnBack: function (btn) {
+      btn.size() && btn.click(function(e) {
+        e && e.preventDefault();
+          window.history.back();
+      });
+    },
   moreDeal: function () {
     var getDealBtn = $('#J_getMoreDeal'),
       dealList = $('#J_dealList'),
