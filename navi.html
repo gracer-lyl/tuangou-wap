@@ -193,70 +193,7 @@
 <script type="text/javascript" src="script/base.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    var togglerBar = $('#J_togglerBar');
-    var naviBlock = $('#J_navi');
-    var mainBlock = $('#J_main');
-
-    function translation (el, options, callback) {
-            var opt = $.extend({
-                    duration : '0.4s',
-                    origin : '0 0'
-                }, options || {}),
-                style = el.style;
-            
-            !style['webkitTransitionProperty'] &&
-                (style['webkitTransitionProperty'] = '-webkit-transform');
-                    
-            style['webkitTransitionDuration'] !== opt.duration && 
-                (style['webkitTransitionDuration'] = opt.duration);
-            
-            style['webkitTransformOrigin'] !== opt.origin && 
-                (style['webkitTransformOrigin'] = opt.origin);
-            
-            style['webkitBackfaceVisibility'] !== 'hidden' &&
-                (style['webkitBackfaceVisibility'] = 'hidden');
-            
-            style['webkitTransformStyle'] !== 'preserve-3d' &&
-                (style['webkitTransformStyle'] = 'preserve-3d');
-            
-            if (opt.x != null || opt.y != null) {
-                style['webkitTransform'] = 'translate(' + 
-                        (opt.x ? opt.x + 'px,' : '0,') + 
-                        (opt.y ? opt.y + 'px' : '0') + ')';
-                setTimeout(callback, parseFloat(opt.duration) * 500);
-            }    
-        }
-
-    togglerBar.on('click', function(e) {
-    	e && e.preventDefault();
-    	var self = $(this),
-    	     status = self.attr('data-status');
-
-    	if (status == 'off') {
-     	     self.attr('data-status', 'on');
-    	     translation(naviBlock[0],{x: 0, duration:'0.4s'},function(){
-                // $('#leftmask').css('height',that.bodyCont.height());
-                });
-    	     $('.slide').each(function(index, item) {
-    		translation(item,{x: 250, duration:'0.4s'},function(){
-	                // $('#leftmask').css('height',that.bodyCont.height());
-	           });
-    	      });
-    	} else if (status == 'on') {
-    	    self.attr('data-status', 'off');
-    	    $('.slide').each(function(index, item) {
-    		translation(item,{x: 0, duration:'0.4s'},function(){
-	                // $('#leftmask').css('height',that.bodyCont.height());
-	                naviBlock.attr('style', 'height: 1078px; left:0;');
-	                $(item).attr('style', '');
-	           });
-    	      });
-    	    translation(naviBlock[0],{x: -250, duration:'0.4s'},function(){
-                // $('#leftmask').css('height',that.bodyCont.height());
-               });
-    	}
-
-    });
+    DP.app.slideNavi();
 });
 </script>
 </body>
